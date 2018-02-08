@@ -23,9 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/* This is example Controller class with extends description for SwaggerApi
+/*
+* This is example Controller class with extended description for SwaggerApi
 *  These @Api*** annotations are not necessary if we use @ResponseStatus
-*  and return Model objects instead of generic response
+*  and @ResponseBody objects instead of generic response
 */
 
 @Api(value="MovieController", description="List of favourite Movies")

@@ -3,8 +3,11 @@ package net.jwierzbo.rest.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import net.jwierzbo.rest.validation.Name;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
 
 @ApiModel(value = "Movie")
 public class Movie {
@@ -12,8 +15,12 @@ public class Movie {
     @ApiModelProperty(notes = "The database generated product ID")
     private Long id;
 
+    // example of default Bean validation
+    @NotNull(message = "title can not be null")
     private String title;
 
+    // example of custom Bean validation
+    @Name(message = "Invalid director name - it has to start with uppercase!")
     private String director;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
