@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import net.jwierzbo.rest.dao.MovieDAO;
-import net.jwierzbo.rest.exception.MovieNotFoundException;
 import net.jwierzbo.rest.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,8 @@ import java.util.List;
 
 /* This is example Controller class with extends description for SwaggerApi
 *  These @Api*** annotations are not necessary if we use @ResponseStatus
-*  and return Model objects instead of generic response */
+*  and return Model objects instead of generic response
+*/
 
 @Api(value="MovieController", description="List of favourite Movies")
 @RestController
@@ -46,8 +46,7 @@ public class MovieV2SwaggerController {
     @ApiResponses(value = {@ApiResponse(code = 404, message = "Not Found")})
     @GetMapping("/movies/{id}")
     public Movie getMovie(@PathVariable("id") Long id) {
-        Movie movie = checkIfMovieExist(id);
-        return movie;
+        return movieDAO.get(id).get();
     }
 
     @ApiOperation(value = "Add new Movie",response = Movie.class)
@@ -70,7 +69,6 @@ public class MovieV2SwaggerController {
     @DeleteMapping("/movies/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteMovie(@ApiParam(value = "Movie ID", required = true) @PathVariable Long id) {
-        checkIfMovieExist(id);
         movieDAO.delete(id);
     }
 
@@ -79,12 +77,6 @@ public class MovieV2SwaggerController {
             @ApiResponse(code = 404, message = "Not Found")})
     @PutMapping("/movies/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
-        checkIfMovieExist(id);
         return movieDAO.update(id, movie);
     }
-
-    private Movie checkIfMovieExist(Long id) {
-        return movieDAO.get(id).orElseThrow(() -> new MovieNotFoundException(id));
-    }
-
 }

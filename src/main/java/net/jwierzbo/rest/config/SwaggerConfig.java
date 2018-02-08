@@ -2,6 +2,7 @@ package net.jwierzbo.rest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -25,8 +26,8 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .globalResponseMessage(RequestMethod.GET,
                         Arrays.asList(new ResponseMessageBuilder()
-                                .code(500)
-                                .message("Server Error")
+                                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                                 .build()))
                 .select()
                     .apis(RequestHandlerSelectors.basePackage("net.jwierzbo.rest"))

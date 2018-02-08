@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
+import net.jwierzbo.rest.exception.MovieNotFoundException;
 import net.jwierzbo.rest.model.Movie;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +32,13 @@ public class MovieDAO {
     }
 
     public Optional<Movie> get(Long id) {
-
         for (Movie c : movies) {
             if (c.getId().equals(id)) {
                 return Optional.of(c);
             }
         }
-        return Optional.empty();
+
+        throw new MovieNotFoundException(id);
     }
 
     public Movie create(Movie movie) {
@@ -47,7 +48,6 @@ public class MovieDAO {
     }
 
     public Long delete(Long id) {
-
         for (Movie c : movies) {
             if (c.getId().equals(id)) {
                 movies.remove(c);
@@ -55,11 +55,10 @@ public class MovieDAO {
             }
         }
 
-        return null;
+        throw new MovieNotFoundException(id);
     }
 
     public Movie update(Long id, Movie movie) {
-
         for (Movie c : movies) {
             if (c.getId().equals(id)) {
                 movie.setId(c.getId());
@@ -69,7 +68,7 @@ public class MovieDAO {
             }
         }
 
-        return null;
+        throw new MovieNotFoundException(id);
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1") // prefix for api methods
 public class MovieV1RestController {
 
+    @ResponseStatus(value=HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MovieNotFoundException.class)
+    public String handleNotFoundMovie(Exception ex) {
+        return "LOCAL-class handler: " + ex.getMessage();
+    }
+
     @Autowired
     private MovieDAO movieDAO;
 
@@ -35,8 +42,7 @@ public class MovieV1RestController {
     @ResponseBody // is redundant: @RestController adds it automatically
     @GetMapping("/movies/{id}") // shortcut for @RequestMapping
     public Movie getMovie(@PathVariable("id") Long id) {
-        Movie movie = checkIfMovieExist(id);
-        return movie;
+        return movieDAO.get(id).get();
     }
 
     // Example of use generic ResponseEntity instead of @ResponseStatus and @ResponseBody
@@ -49,18 +55,12 @@ public class MovieV1RestController {
     @DeleteMapping("/movies/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteMovie(@PathVariable Long id) {
-        checkIfMovieExist(id);
         movieDAO.delete(id);
     }
 
     @PutMapping("/movies/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
-        checkIfMovieExist(id);
         return movieDAO.update(id, movie);
-    }
-
-    private Movie checkIfMovieExist(Long id) {
-        return movieDAO.get(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
 
 }
