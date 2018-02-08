@@ -1,4 +1,4 @@
-package net.jwierzbo.rest.controller;
+package net.jwierzbo.rest.api;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/v1") // prefix for api methods
 public class MovieV1RestController {
 
     @Autowired
