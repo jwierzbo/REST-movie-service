@@ -5,7 +5,7 @@
 
     <groupId>net.jwierzbo.rest</groupId>
     <artifactId>REST-movie-service</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
     <name>Movie app - Spring Boot REST with CRUD example</name>
 
@@ -45,6 +45,13 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.lib.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Hot deploy -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
