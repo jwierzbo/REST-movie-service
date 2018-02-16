@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.jwierzbo.rest</groupId>
-    <artifactId>REST-movie-service</artifactId>
-    <version>0.2</version>
-    <packaging>jar</packaging>
-    <name>Movie app - Spring Boot REST with CRUD example</name>
+    <artifactId>movies</artifactId>
+    <version>0.3</version>
+    <packaging>war</packaging>
+    <name>Movies app - Spring Boot REST with CRUD example</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,13 +47,29 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Hot deploy -->
+        <!-- Spring Hot Deploy -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <version>${spring.boot.version}</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>tomcat</id>
+            <dependencies>
+                <!-- Standalone Tomcat Server Deploy requirements-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
