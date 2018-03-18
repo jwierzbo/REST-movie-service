@@ -5,6 +5,8 @@ import java.util.List;
 import net.jwierzbo.rest.dao.MovieDAO;
 import net.jwierzbo.rest.exception.MovieNotFoundException;
 import net.jwierzbo.rest.model.Movie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1") // prefix for api methods
 public class MovieV1RestController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ResponseStatus(value=HttpStatus.NOT_FOUND)
     @ExceptionHandler(MovieNotFoundException.class)
