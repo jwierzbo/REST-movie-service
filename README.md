@@ -43,3 +43,6 @@ REST CRUD Example for Spring Boot
     * Add `http://$HOST:$DEBUG_PORT` to the Program arguments
 
 1. Edit some Java file end reload it: `Build -> Build Projekt (Ctrl+F9)` - server should reload and restart automatically
+
+----
+imie i nazwisko
